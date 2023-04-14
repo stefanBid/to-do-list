@@ -7,7 +7,7 @@ export default defineComponent({
     data(){
         return{
             links:[] as LinkItem[],
-            isOpen:true
+            isOpen:false
         }
     },
     mounted(){
@@ -35,7 +35,7 @@ export default defineComponent({
         <span class="absolute md:hidden right-6 top-1.5 cursor-pointer text-4xl hover:text-green-500  animate-pulse" @click="openCloseMenu">
             <i :class="[isOpen? 'bi bi-x':'bi bi-filter-left']"></i>
         </span>
-        <ul class="md:flex md:item-center md:px-0 px-10 md:pb-0 pb-10 md:static absolute  bg-gray-900 md:w-auto w-full md:h-auto h-[92.5vh] top-14 duration-700 ease-in-out"
+        <ul class="md:flex md:item-center md:px-0 px-10 md:pb-0 pb-10 md:static absolute  bg-gray-900 md:w-auto w-full md:h-auto h-[92vh] top-14 duration-700 ease-in-out z-50"
         :class="[isOpen ? 'left-0' : 'left-[-100%]']">
             <template v-for="link in links">
                 <li class="md:mx-4 md:my-0 my-6">

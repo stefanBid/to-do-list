@@ -5,3 +5,8 @@ export interface LinkItem{
     destination:string,
     customClass:string
 }
+
+export interface TaskItem{
+    description:string,
+    isComplete:boolean
+}
