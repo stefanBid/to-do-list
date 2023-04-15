@@ -98,7 +98,7 @@ export default defineComponent({
                 :disabled="false"
                 type="outline"
                 @click="filter=2">
-                To complete <i class="bi bi-funnel-fill"></i>
+                To be completed <i class="bi bi-funnel-fill"></i>
                 </BaseButton>
 
                 <BaseButton
@@ -106,7 +106,7 @@ export default defineComponent({
                 :disabled="false"
                 type="outline"
                 @click="filter=1">
-                Complete <i class="bi bi-funnel-fill"></i>
+                Completed <i class="bi bi-funnel-fill"></i>
                 </BaseButton>
 
                 <BaseButton
@@ -129,7 +129,7 @@ export default defineComponent({
                             :disabled="false"
                             type="text"
                             @click="executeOperation(task)">
-                            Elimina <i class="bi bi-trash-fill"></i>
+                            Remove <i class="bi bi-trash-fill"></i>
                             </BaseButton>
                             <BaseCheckBox v-if="filter===0"
                             :custom-class-check-box="' self-center mr-2 accent-green-600 active:accent-red-700 hover:accent-green-600 hover:cursor-pointer h-4 w-4 rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none'"
