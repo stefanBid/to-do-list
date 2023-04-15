@@ -92,7 +92,7 @@ export default defineComponent({
         </div>
         <div class=" flex flex-col space-y-7 justify-center  md:h-full h-auto basis-1/2 bg-gray-700  p-5 md:text-right text-center md:ml-2 md:mt-0 mt-2">
             <h1 class="text-white md:text-2xl sm:text-xl text-lg font-mono font-semibold">List of Task</h1>
-            <div class="md:inline-block sm:inline-block md:space-x-3 sm:space-x-3 flex flex-col-reverse items-stretch md:text-xl sm:text-lg text-md font-semibold font-mono text-white ">
+            <div class="md:inline-block sm:inline-block md:space-x-3 sm:space-x-3 flex flex-col-reverse items-stretch md:text-lg sm:text-md text-sm font-semibold font-mono text-white ">
                 <BaseButton
                 :custom="'p-2 hover:bg-white focus:bg-white hover:text-red-800 focus:text-red-800 focus:animate-bounce'"
                 :disabled="false"
@@ -133,7 +133,7 @@ export default defineComponent({
                             </BaseButton>
                             <BaseCheckBox v-if="filter===0"
                             :custom-class-check-box="' self-center mr-2 accent-green-600 active:accent-red-700 hover:accent-green-600 hover:cursor-pointer h-4 w-4 rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none'"
-                            :label-for-check-box="task['isComplete']?'Complete':'To complete'"
+                            :label-for-check-box="task['isComplete']?'Completed':'To be completed'"
                             :custom-class-label="' self-center font-mono font-semibold md:text-xl text-md text-white'"
                             v-model:checked="task['isComplete']"
                             />
