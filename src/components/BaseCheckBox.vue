@@ -22,7 +22,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class=" justify-self-end mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
+    <div class="flex flex-row items-stretch space-x-2  p-2 justify-end  ">
         <input 
         type="checkbox" 
         :class="customClassCheckBox"
