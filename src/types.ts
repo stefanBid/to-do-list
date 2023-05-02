@@ -10,3 +10,21 @@ export interface TaskItem{
     description:string,
     isComplete:boolean
 }
+
+export interface BookItem{
+    isbn:string,
+    bTitle:string,
+    authors:string,
+    page:number,
+    nobelAward:boolean
+
+}
+
+export enum BookItemKeys{
+    B_ISBN = 'isbn',
+    B_TITLE = 'bTitle',
+    B_AUTHORS = 'authors',
+    B_PAGE = 'page',
+    B_NOBEL_AWARD = 'nobelAward'
+}
+

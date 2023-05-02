@@ -13,7 +13,8 @@ export default defineComponent({
         },
         custom:{
             type:String,
-            required:false
+            required:false,
+            default: ''
         }
         
     },
@@ -25,7 +26,7 @@ export default defineComponent({
     <button 
         :class="
             [
-                custom!=undefined?custom:'', 
+                custom,
                 type==='text'?'bg-inherit hover:bg-inherit':'',
                 type==='outline'?'bg-inherit border border-current':'',
                 type==='solid'?'border-inherit':'',
