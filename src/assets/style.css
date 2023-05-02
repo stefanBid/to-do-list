@@ -73,6 +73,14 @@
     @apply bg-transparent
   }
 
+  .dx-field-item-label-text{
+    @apply text-green-500 text-xl
+  }
+
+  .dx-field-item-content{
+    @apply text-lg text-white
+  }
+
 }
 
 /* ===== Scrollbar CSS ===== */
