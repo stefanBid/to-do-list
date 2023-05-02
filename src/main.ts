@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import 'devextreme/dist/css/dx.light.css'
 import App from './App.vue'
 import router from './router'
 
