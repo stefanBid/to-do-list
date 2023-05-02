@@ -79,6 +79,7 @@ const columns = computed(()=>{
             headerCellTemplate:BookItemKeys.B_PAGE,
             visible:true,
             alignment:'center',
+            customizeText:pageCustom,
             allowSearch:false
         },
         {
@@ -92,13 +93,17 @@ const columns = computed(()=>{
     ]
 });
 //FUNCTIONS
-const isAwarded = function(e:any){
+const cellPrepared = function(e:any){
     if(e.rowType === 'data'){
         if(e.column.dataField === BookItemKeys.B_NOBEL_AWARD && e.data[BookItemKeys.B_NOBEL_AWARD] === true){
             e.cellElement.classList.add("award");
         }
     }
 };
+
+const pageCustom = function(cellInfo:any){
+    return cellInfo.value + " pages";
+}
 //COMPONENT LIFE-CYCLE
 onMounted(()=>{
     loadAllBooks();
@@ -109,13 +114,13 @@ onMounted(()=>{
 <template>
    <div class="section-container nero">
         <DxDataGrid
-        class="tbl dx-datagrid dx-datagrid-headers dx-data-row dx-widget dx-datagrid-pager dx-page-sizes dx-page-size dx-toolbar .dx-datagrid-nodata dx-datagrid-rowsview dx-texteditor-input"
+        class="tbl dx-datagrid dx-datagrid-headers dx-data-row dx-widget dx-datagrid-pager dx-page-sizes dx-page-size dx-toolbar .dx-datagrid-nodata dx-datagrid-rowsview dx-texteditor-input dx-field-item-label-text "
         :data-source="books"
         :columns="columns"
         :key-expr="BookItemKeys.B_ISBN"
         :column-auto-width="true"
         :column-hiding-enabled="true"
-        @cell-prepared="isAwarded"
+        @cell-prepared="cellPrepared"
         >
 
         <!--Define Header Style of Grid-->
