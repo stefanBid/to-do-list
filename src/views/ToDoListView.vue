@@ -60,7 +60,6 @@ export default defineComponent({
     },
     updated(){
         this.storeTask.updateCount
-        console.log(this.storeTask.count)
         this.storeTask.persisteTasks()
     }
 })
