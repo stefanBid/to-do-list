@@ -5,39 +5,14 @@
 
 @layer components{
   .section-container{
-    @apply
-    flex 
-    flex-row  
-    mx-11 
-    my-7 
-    h-5/6
-   shadow-black 
-    shadow-lg
-   bg-gray-900 p-10
+    @apply flex flex-row mx-11 my-7 h-5/6 shadow-black shadow-lg bg-gray-900 p-10
   }
   .tbl{
-    @apply h-auto w-full;
-  }
-
-  .dx-row{
-    @apply 
-    bg-gray-700
-    text-white
-    text-lg 
-    font-mono
-    font-semibold
-    duration-700 
-    ease-in-out 
-  }
-
-  .dx-data-row {
-    @apply 
-    hover:text-green-500
-    hover:bg-gray-600
+    @apply h-auto;
   }
 
   .tbl-header{
-    @apply text-green-500 flex flex-row gap-3 justify-center items-center
+    @apply text-green-500 flex flex-row gap-3 justify-center items-center font-semibold
   }
 
   .tbl-header h1{
@@ -48,47 +23,56 @@
     @apply text-2xl
   }
 
-  .dx-pager{
-    @apply bg-gray-500 text-white font-mono font-semibold flex flex-row justify-between items-center gap-2
+  .award{
+    @apply text-yellow-500 text-2xl
+  }
+
+  /*DATA GRID CONTENT AND ROW CSS*/
+  .dx-datagrid{
+    @apply bg-gray-700 text-white font-mono font-semibold text-lg border-none w-auto 
+  }
+
+  .dx-datagrid-headers{
+    @apply bg-gray-800
+  }
+
+ 
+  .dx-data-row{
+    @apply hover:bg-green-500 hover:text-gray-800 duration-500 ease-in-out
+  }
+
+  .dx-widget{
+    @apply font-mono font-semibold text-green-500
+  }
+
+  .dx-datagrid-pager {
+    @apply flex flex-row items-center justify-between 
   }
 
   .dx-page-sizes{
-    @apply ml-2 p-0
+    @apply flex flex-row items-center gap-x-2
   }
 
-  .dx-page-size{
-    @apply
-  text-green-500
-  bg-gray-600
-  hover:bg-green-500
-  hover:text-gray-600
-    duration-700
-    ease-in-out
+  .dx-page-size,  .dx-page{
+    @apply bg-slate-600 hover:bg-green-500 hover:text-gray-700 duration-500 ease-in-out
   }
 
-
-  .dx-texteditor input[type='text']{
-    @apply
-    bg-white
-    text-green-500
-    font-mono
-    font-semibold
-    hover:bg-slate-200
-    duration-700 
-    ease-in-out
-  }
-  
-  .award{
-    @apply text-yellow-500
-  }
-
-  .dx-toolbar, .dx-datagrid-header-panel {
-    @apply bg-gray-500
+  .dx-texteditor-input{
+    @apply bg-slate-600 text-white focus:bg-white focus:text-green-500 duration-500 ease-in-out
   }
 
   .dx-toolbar{
-    @apply p-3
+    @apply mb-0 bg-gray-700 p-2 flex flex-row items-center
   }
+
+  .dx-datagrid-nodata{
+    @apply text-green-500 text-4xl  animate-pulse
+  }
+
+  .dx-datagrid-rowsview .dx-master-detail-row:not(.dx-datagrid-edit-form) .dx-master-detail-cell{
+    @apply bg-transparent
+  }
+
 }
 
 /* ===== Scrollbar CSS ===== */

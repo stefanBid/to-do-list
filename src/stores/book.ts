@@ -14,7 +14,6 @@ export const useBookStore = defineStore({
             BookServices.getAllBooks()
             .then(response => {
                 this.books = response.data
-                console.log(response.data)
             })
             .catch(er => console.log(er))
         }

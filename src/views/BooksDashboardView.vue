@@ -1,116 +1,157 @@
-<script lang="ts">
-    import { defineComponent } from 'vue';
-    import { useBookStore } from '@/stores/book';
-    import {DxDataGrid,DxColumn, DxPaging,DxPager, DxScrolling, DxFilterRow, DxSearchPanel} from 'devextreme-vue/data-grid';
-    import { BookItemKeys} from '@/types'
-    export default defineComponent({
-        name:'BookList',
-        components:{DxDataGrid,DxColumn, DxPager, DxPaging, DxScrolling, DxFilterRow, DxSearchPanel},
-        data() {
-            return{
-                BookItemKeys,
-                columnsCaption:[] as string[],
-                iconsCaptions:[] as string[],
-                dt:'' as string
-            }
+<script setup lang="ts">
+import { computed, onMounted,ref} from 'vue';
+import { BookItemKeys} from '@/types'
+import { useBookStore } from '@/stores/book';
+import { storeToRefs } from 'pinia';
+import {DxDataGrid,DxPaging,DxPager, DxSearchPanel} from 'devextreme-vue/data-grid';
+
+//STORE OF BOOKS
+const store = useBookStore();
+const {books} = storeToRefs(store);
+const {loadAllBooks} = store;
+
+//DATA FOR PAGINATION
+const pageSizeStart = ref<number>(10);
+const pageSizes = ref<any[]>([5,10,'all'])
+
+// DEFINE HEADER SETTINGS FOR DX-DATA-GRID-COMPONENT
+const headers = computed(()=>{
+    return [
+        {
+            slotId:BookItemKeys.B_ISBN,
+            textCaption:'ISBN Code',
+            iconCaption:'bi bi-upc'
         },
-        setup() {
-            const storeBook = useBookStore()
-            return{storeBook}
+        {
+            slotId:BookItemKeys.B_TITLE,
+            textCaption:'Title of book',
+            iconCaption:'bi bi-book-half'
         },
-        mounted() {
-            this.storeBook.loadAllBooks()
-            this.columnsCaption= ['ISBN Code', 'Title of book', 'Authors of book', 'Number of page', 'Nobel Award']
-            this.iconsCaptions=['bi bi-upc', 'bi bi-book-half', 'bi bi-vector-pen', 'bi bi-list-ol', 'bi bi-award-fill']
-            this.dt = 'string'
-            
+        {
+            slotId:BookItemKeys.B_AUTHORS,
+            textCaption:'Authors of book',
+            iconCaption:'bi bi-vector-pen'
         },
-        methods:{
-            isAwarded(e:any) {
-            if (e.rowType === "data") {
-                    if (e.column.dataField === BookItemKeys.B_NOBEL_AWARD && e.data[BookItemKeys.B_NOBEL_AWARD] === true) {
-                        e.cellElement.classList.add("award");
-                    }
-                }
-            }
+        {
+            slotId:BookItemKeys.B_PAGE,
+            textCaption:'Number of page',
+            iconCaption:'bi bi-blockquote-left'
+        },
+        {
+            slotId:BookItemKeys.B_NOBEL_AWARD,
+            textCaption:'Nobel Award',
+            iconCaption:'bi bi-award-fill'
         }
-    })
+    ]
+});
+
+//DEFINE CELL SETTINGS FOR DX-DATA-GRID-COMPONENT
+const cells = computed(()=>{
+    return [`${BookItemKeys.B_NOBEL_AWARD}-cell-template`]
+})
+
+// DEFINE COLUMNS SETTINGS FOR DX-DATA-GRID-COMPONENT
+const columns = computed(()=>{
+    return [
+        {
+            dataField:BookItemKeys.B_ISBN,
+            headerCellTemplate:BookItemKeys.B_ISBN,
+            visible:true,
+            alignment:'center',
+            allowSearch:false,
+        },
+        {
+            dataField:BookItemKeys.B_TITLE,
+            headerCellTemplate:BookItemKeys.B_TITLE,
+            visible:true,
+            alignment:'left',
+            allowSearch:true,
+        },
+        {
+            dataField:BookItemKeys.B_AUTHORS,
+            headerCellTemplate:BookItemKeys.B_AUTHORS,
+            visible:true,
+            alignment:'center',
+            allowSearch:true
+        },
+        {
+            dataField:BookItemKeys.B_PAGE,
+            headerCellTemplate:BookItemKeys.B_PAGE,
+            visible:true,
+            alignment:'center',
+            allowSearch:false
+        },
+        {
+            dataField:BookItemKeys.B_NOBEL_AWARD,
+            headerCellTemplate:BookItemKeys.B_NOBEL_AWARD,
+            cellTemplate:`${BookItemKeys.B_NOBEL_AWARD}-cell-template`,
+            visible:true,
+            alignment:'center',
+            allowSearch:false,
+        }
+    ]
+});
+//FUNCTIONS
+const isAwarded = function(e:any){
+    if(e.rowType === 'data'){
+        if(e.column.dataField === BookItemKeys.B_NOBEL_AWARD && e.data[BookItemKeys.B_NOBEL_AWARD] === true){
+            e.cellElement.classList.add("award");
+        }
+    }
+};
+//COMPONENT LIFE-CYCLE
+onMounted(()=>{
+    loadAllBooks();
+});
+
 </script>
 
 <template>
-    <div class="section-container">
-        <DxDataGrid 
-        class="tbl dx-row dx-data-row"
-        :show-borders="false"
-        :data-source=storeBook.books
+   <div class="section-container nero">
+        <DxDataGrid
+        class="tbl dx-datagrid dx-datagrid-headers dx-data-row dx-widget dx-datagrid-pager dx-page-sizes dx-page-size dx-toolbar .dx-datagrid-nodata dx-datagrid-rowsview dx-texteditor-input"
+        :data-source="books"
+        :columns="columns"
         :key-expr="BookItemKeys.B_ISBN"
         :column-auto-width="true"
+        :column-hiding-enabled="true"
         @cell-prepared="isAwarded"
         >
-        <!--Scrolling Setup-->
-        <DxScrolling row-rendering-mode="virtual"/>
-        <!--Search Setup-->
-        <DxSearchPanel :visible="true" placeholder="search through the books..." :width="240"  class="dx-datagrid-header-panel dx-toolbar "/>
-        <!--Paginator Setup-->
-        <DxPaging :pageSize="10"/>
-        <DxPager
-        class="dx-texteditor dx-texteditor-container dx-pager dx-page-sizes dx-page-size"
-        :visible="true"
-        :show-page-size-selector="true"
-        :allowed-page-sizes="[5,10, 'all']"
-        :show-navigation-buttons="true"
-        :show-info="true"
-        />
-        <!--Columns Setup-->
-        <DxColumn
-        :data-field="BookItemKeys.B_ISBN"
-        :header-cell-template="BookItemKeys.B_ISBN"
-        :data-type = "dt"
-        :allow-search="false"
-        />
-        <DxColumn
-        :data-field="BookItemKeys.B_TITLE"
-        :header-cell-template="BookItemKeys.B_TITLE"
-        :data-type="dt"
-        :allow-search="false"
-        />
-        <DxColumn
-        :data-field="BookItemKeys.B_AUTHORS"
-        :header-cell-template="BookItemKeys.B_AUTHORS"
-        :data-type="dt"
-        :allow-search="true"
-        />
-        <DxColumn
-        :data-field="BookItemKeys.B_PAGE"
-        :header-cell-template="BookItemKeys.B_PAGE"
-        :data-type="dt"
-        :allow-search="false"
-        />
-        <DxColumn
-        :data-field="BookItemKeys.B_NOBEL_AWARD"
-        :header-cell-template="BookItemKeys.B_NOBEL_AWARD"
-        cell-template="nobel-cell-tmpl"
-        :data-type="dt"
-        :allow-search="false"
-        />
 
-        <!--Columns Header Setup-->
-        <template v-for="(key,index) of [BookItemKeys.B_ISBN, BookItemKeys.B_TITLE, BookItemKeys.B_AUTHORS, BookItemKeys.B_PAGE, BookItemKeys.B_NOBEL_AWARD]"  #[key]>
+        <!--Define Header Style of Grid-->
+        <template v-for="header of headers" #[header.slotId]>
             <span class="tbl-header">
-                <h1>{{columnsCaption[index]}}</h1>
-                <i :class="[iconsCaptions![index]]"></i>
+                <h1>{{header.textCaption}}</h1>
+                <i :class="header.iconCaption"></i>
             </span>
         </template>
 
-        <!--Columns Cell Setup-->
-        <template #nobel-cell-tmpl = {data}>
+        <!--Define Cell Style of Grid-->
+        <template v-for="cell of cells" #[cell]="{data}">
             <span v-if="data.value === true">
                 <i class="bi bi-award-fill"></i>
             </span>
             <span v-else>
+                <i class="bi bi-dash"></i>
             </span>
         </template>
-        </DxDataGrid>
-    </div>
-</template>
 
+        <!--Search Setup -->
+        <DxSearchPanel
+        :visible="true" 
+        placeholder="Search through the books..."
+        :width="240"
+        />
+
+        <!--Pager Setup-->
+        <DxPaging :pageSize="pageSizeStart"/>
+        <DxPager
+        :visible="true"
+        :show-page-size-selector="true"
+        :allowed-page-sizes="pageSizes"
+        :show-navigation-buttons="true"
+        :show-info="true"
+        />
+        </DxDataGrid>
+   </div> 
+</template>
