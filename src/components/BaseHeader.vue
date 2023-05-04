@@ -13,7 +13,8 @@ export default defineComponent({
     mounted(){
         this.links = [
             {label:'Home', destination:'home', customClass:'text-xl font-mono hover:text-green-500'},
-            {label:'Books', destination:'books', customClass:'text-xl font-mono hover:text-green-500'}
+            {label:'Books Grid', destination:'books', customClass:'text-xl font-mono hover:text-green-500'},
+            {label:'Regions Chart', destination:'regions', customClass:'text-xl font-mono hover:text-green-500'}
 
         ]
         
