@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type {BookItem} from '@/types'
-import BookServices from "@/services/BookServices";
+import DataService from "@/services/FakeDataService";
 
 export const useBookStore = defineStore({
     id:'bookStore',
@@ -11,7 +11,7 @@ export const useBookStore = defineStore({
     ),
     actions:{
         loadAllBooks(){
-            BookServices.getAllBooks()
+            DataService.getAllBooks()
             .then(response => {
                 this.books = response.data
             })

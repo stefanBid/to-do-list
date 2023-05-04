@@ -3,6 +3,8 @@ import { computed, onMounted,ref} from 'vue';
 import { BookItemKeys} from '@/types'
 import { useBookStore } from '@/stores/book';
 import { storeToRefs } from 'pinia';
+import BaseTitle from '@/components/BaseTitle.vue';
+import { TitleStyle } from '@/types';
 import {DxDataGrid,DxPaging,DxPager, DxSearchPanel} from 'devextreme-vue/data-grid';
 
 //STORE OF BOOKS
@@ -112,7 +114,10 @@ onMounted(()=>{
 </script>
 
 <template>
-   <div class="section-container nero">
+   <div class="section-container">
+    <BaseTitle :title-style="TitleStyle.CLASSIC_BIGGEST" :orientation="'center'">
+        Table of Books
+    </BaseTitle>
         <DxDataGrid
         class="tbl dx-datagrid dx-datagrid-headers dx-data-row dx-widget dx-datagrid-pager dx-page-sizes dx-page-size dx-toolbar .dx-datagrid-nodata dx-datagrid-rowsview dx-texteditor-input dx-field-item-label-text "
         :data-source="books"
