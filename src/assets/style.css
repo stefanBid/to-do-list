@@ -11,7 +11,7 @@
   }
 
   .tbl{
-    @apply h-auto;
+    @apply h-full;
   }
 
   .tbl-header{
